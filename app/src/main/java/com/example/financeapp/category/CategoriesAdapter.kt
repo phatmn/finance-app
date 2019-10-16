@@ -7,9 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.R
 import kotlinx.android.synthetic.main.category.view.*
-import java.util.*
 
-class CategoriesAdapter(private val categories: ArrayList<Category>) :
+class CategoriesAdapter(private val categories: List<Category>) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

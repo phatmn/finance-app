@@ -9,7 +9,7 @@
     >
 
     <ImageView
-        android:id="@+id/oper_image"
+        android:id="@+id/operImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,21 +17,21 @@
         tools:src="@drawable/ic_local_grocery_store_black_24dp" />
 
     <TextView
-        android:id="@+id/oper_category"
+        android:id="@+id/operCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:paddingStart="8dp"
         android:textColor="@android:color/primary_text_light"
         android:textSize="25sp"
-        app:layout_constraintEnd_toStartOf="@+id/oper_amount"
+        app:layout_constraintEnd_toStartOf="@+id/operAmount"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/oper_image"
+        app:layout_constraintStart_toEndOf="@+id/operImage"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Category" />
+        tools:text="[Category]" />
 
     <TextView
-        android:id="@+id/oper_amount"
+        android:id="@+id/operAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -41,18 +41,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="0.00" />
+        tools:text="[0.00]" />
 
     <TextView
-        android:id="@+id/oper_comment"
+        android:id="@+id/operComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:paddingStart="8dp"
         android:textColor="@android:color/secondary_text_light"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/oper_image"
-        app:layout_constraintTop_toBottomOf="@+id/oper_category"
-        tools:text="Comment" />
+        app:layout_constraintStart_toEndOf="@+id/operImage"
+        app:layout_constraintTop_toBottomOf="@+id/operCategory"
+        tools:text="[Comment]" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

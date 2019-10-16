@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.R
 import kotlinx.android.synthetic.main.operation.view.*
 
-class OperationsAdapter(private val operations: ArrayList<Operation>) :
+class OperationsAdapter(private val operations: List<Operation>) :
     RecyclerView.Adapter<OperationsAdapter.ViewHolder>() {
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val amount: TextView = v.oper_amount
-        val category: TextView = v.oper_category
-        val comment: TextView = v.oper_comment
-        val image: ImageView = v.oper_image
+        val amount: TextView = v.operAmount
+        val category: TextView = v.operCategory
+        val comment: TextView = v.operComment
+        val image: ImageView = v.operImage
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,10 +31,12 @@ class OperationsAdapter(private val operations: ArrayList<Operation>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // todo image category change
         // todo category change
-        holder.amount.text = operations[position].amount.toString()
-        holder.category.text = operations[position].category
-        holder.comment.text = operations[position].comment
-        holder.image.setImageResource(R.drawable.ic_local_grocery_store_black_24dp)
+        with(holder) {
+            amount.text = operations[position].amount.toString()
+            category.text = operations[position].category.name
+            comment.text = operations[position].comment
+            image.setImageResource(R.drawable.ic_local_grocery_store_black_24dp)
+        }
     }
 
 

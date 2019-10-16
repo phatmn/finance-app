@@ -6,26 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.financeapp.R
+import kotlinx.android.synthetic.main.fragment_accounts.*
 
 class AccountsFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    companion object {
+        fun newInstance() : AccountsFragment {
+            return AccountsFragment()
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_accounts, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_accounts, container, false)
 
-    companion object {
 
-        @JvmStatic
-        fun newInstance() : AccountsFragment {
-            return AccountsFragment()
-        }
+        return view
     }
 }

@@ -9,23 +9,21 @@ import com.example.financeapp.category.Category
 import kotlinx.android.synthetic.main.activity_add_operation.*
 
 class AddOperationActivity : AppCompatActivity() {
-    private lateinit var dsCategories : ArrayList<Category>
+    private val dsCategories : ArrayList<Category> = initCategories()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_operation)
 
-        initCategories()
-
-        rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvCategories.adapter = CategoriesAdapter(dsCategories)
+        with(rvCategories) {
+            layoutManager = LinearLayoutManager(this@AddOperationActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = CategoriesAdapter(dsCategories)
+        }
     }
 
-    private fun initCategories() {
-        dsCategories = Array(10) { i ->
-            Category
-                .create()
-                .setName("Category $i")
-        }.toCollection(ArrayList())
+    private fun initCategories(): ArrayList<Category> {
+        return (1..10).map {
+            Category("Category $it")
+        } as ArrayList
     }
 }
