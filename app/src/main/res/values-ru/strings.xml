@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FinanceApp</string>
+    <string name="Expense">Расход</string>
+    <string name="Income">Доход</string>
+    <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
+</resources>

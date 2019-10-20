@@ -1,3 +1,9 @@
 package com.example.financeapp.category
 
-data class Category (val name: String)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Category (
+    val name: String = "Category"
+) : Parcelable

@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:layout_margin="2dp"
-        android:textColor="@color/white"
-        android:background="@color/colorPrimary"
+        style="@style/category"
         tools:text="[Category]" />
 </LinearLayout>
