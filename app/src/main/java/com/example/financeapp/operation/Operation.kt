@@ -1,8 +1,12 @@
 package com.example.financeapp.operation
 
+import android.os.Parcelable
 import com.example.financeapp.category.Category
+import kotlinx.android.parcel.Parcelize
 
-data class Operation(val amount: Double) {
-    val category : Category = Category("")
-    val comment : String = ""
-}
+@Parcelize
+data class Operation(
+    val amount: Double,
+    val category : Category = Category("Category"),
+    val comment : String = "Comment"
+) : Parcelable

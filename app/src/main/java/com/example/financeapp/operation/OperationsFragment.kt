@@ -1,18 +1,17 @@
 package com.example.financeapp.operation
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.financeapp.BaseFragment
 import com.example.financeapp.R
+import com.example.financeapp.util.*
 import kotlinx.android.synthetic.main.fragment_operations.*
 
 
-class OperationsFragment : Fragment() {
+class OperationsFragment : BaseFragment() {
     private var dsOperations : ArrayList<Operation> = initOperations()
 
     companion object {
@@ -21,23 +20,34 @@ class OperationsFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_operations, container, false)
+    override fun layoutId(): Int = R.layout.fragment_operations
 
-        val operations = view.findViewById<RecyclerView>(R.id.rvOperations)
-        with(operations) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(rvOperations) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = OperationsAdapter(dsOperations)
         }
 
-        fab?.setOnClickListener {
-            startActivity(Intent(activity, AddOperationActivity::class.java))
+        fab.setOnClickListener {
+            Intent(activity, AddOperationActivity::class.java).also { intent ->
+                startActivityForResult(intent, ADD_OPERATION_REQUEST)
+            }
         }
-        
-        return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ADD_OPERATION_REQUEST) {
+                data?.extras?.getParcelable<Operation>(EXTRA_OPERATION)?.let {
+                    (rvOperations.adapter as OperationsAdapter).addItem(it)
+                    rvOperations.scrollToPosition(0)
+                }
+            }
+        }
     }
 
     private fun initOperations(): java.util.ArrayList<Operation> {

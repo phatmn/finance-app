@@ -10,9 +10,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="Accounts"
         android:layout_gravity="center"
+        android:text="Accounts"
+        android:textAppearance="@style/H3"
         />
 
 </FrameLayout>
