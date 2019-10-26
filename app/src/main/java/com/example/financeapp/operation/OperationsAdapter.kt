@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.R
 import kotlinx.android.synthetic.main.operation.view.*
 
-class OperationsAdapter(private val operations: List<Operation>) :
+class OperationsAdapter(private val operations: MutableList<Operation>) :
     RecyclerView.Adapter<OperationsAdapter.ViewHolder>() {
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -39,5 +39,8 @@ class OperationsAdapter(private val operations: List<Operation>) :
         }
     }
 
-
+    fun addItem(operation: Operation) {
+        operations.add(0, operation)
+        this.notifyItemInserted(0)
+    }
 }

@@ -40,16 +40,11 @@ class OperationsFragment : BaseFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == ADD_OPERATION_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                data?.extras?.getParcelable<Operation>(EXTRA_OPERATION)?.let { operation ->
-                    dsOperations.add(operation)
-                    with (rvOperations) {
-                        adapter?.itemCount?.minus(1)?.let { position ->
-                            adapter?.notifyItemInserted(position)
-                            scrollToPosition(position)
-                        }
-                    }
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ADD_OPERATION_REQUEST) {
+                data?.extras?.getParcelable<Operation>(EXTRA_OPERATION)?.let {
+                    (rvOperations.adapter as OperationsAdapter).addItem(it)
+                    rvOperations.scrollToPosition(0)
                 }
             }
         }

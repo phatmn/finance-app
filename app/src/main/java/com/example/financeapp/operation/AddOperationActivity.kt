@@ -38,6 +38,7 @@ class AddOperationActivity : AppCompatActivity() {
 
         btnCancel.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
+            finish()
         }
 
         amount.isFocusableInTouchMode = true
