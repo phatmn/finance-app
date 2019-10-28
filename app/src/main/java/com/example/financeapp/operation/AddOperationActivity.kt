@@ -12,11 +12,16 @@ import com.example.financeapp.util.*
 import kotlinx.android.synthetic.main.activity_add_operation.*
 
 class AddOperationActivity : AppCompatActivity() {
-    private val dsCategories : ArrayList<Category> = initCategories()
+    private var dsCategories : ArrayList<Category> = arrayListOf()
+    private var operationId : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_operation)
+
+        operationId = intent.getIntExtra(EXTRA_OPERATION_ID, 0)
+
+        dsCategories = initCategories()
 
         with(rvCategories) {
             layoutManager = LinearLayoutManager(this@AddOperationActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -36,18 +41,17 @@ class AddOperationActivity : AppCompatActivity() {
             finish()
         }
 
-        btnCancel.setOnClickListener {
-            setResult(Activity.RESULT_CANCELED)
-            finish()
+        if (operationId > 0) {
+            // todo fill operation fields by ID
+//            amount.text = dsOperations[operationId].amount.toString()
         }
 
-        amount.isFocusableInTouchMode = true
         amount.requestFocus()
     }
 
     private fun initCategories(): ArrayList<Category> {
         return (1..10).map {
-            Category("Category $it")
+            Category(getString(R.string.category) + " " + it)
         } as ArrayList
     }
 }

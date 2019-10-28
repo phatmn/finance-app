@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".operation.AddOperationActivity">
+    tools:context=".operation.AddOperationActivity"
+    >
 
     <EditText
         android:id="@+id/amount"
@@ -20,7 +21,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="[0.00]" />
+        android:hint="@string/zero_amount"
+        />
 
     <RadioGroup
         android:id="@+id/rgIncomeExpense"
@@ -66,27 +68,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:hint="@string/comment"
         app:layout_constraintTop_toBottomOf="@+id/rvCategories"
         />
-
-    <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/cancel"
-        app:layout_constraintEnd_toStartOf="@+id/btnSave"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment" />
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/save"
         android:layout_margin="8dp"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnCancel"
-        app:layout_constraintTop_toBottomOf="@+id/comment" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/comment"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
