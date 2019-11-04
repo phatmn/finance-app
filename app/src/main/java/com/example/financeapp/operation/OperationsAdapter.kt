@@ -1,7 +1,5 @@
 package com.example.financeapp.operation
 
-import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.R
-import com.example.financeapp.util.EXTRA_OPERATION_ID
 import kotlinx.android.synthetic.main.operation.view.*
 
 class OperationsAdapter(private val operations: MutableList<Operation>) :
     RecyclerView.Adapter<OperationsAdapter.ViewHolder>() {
+
+    private var listener: View.OnClickListener? = null
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val parentView: View = v
@@ -40,17 +39,16 @@ class OperationsAdapter(private val operations: MutableList<Operation>) :
             category.text = operations[position].category.name
             comment.text = operations[position].comment
             image.setImageResource(R.drawable.ic_local_grocery_store_black_24dp)
-            parentView.setOnClickListener { view ->
-                Intent(view.context, AddOperationActivity::class.java).also { intent ->
-                    intent.putExtra(EXTRA_OPERATION_ID, position)
-                    (view.context as Activity).startActivity(intent)
-                }
-            }
+            parentView.setOnClickListener(listener)
         }
     }
 
     fun addItem(operation: Operation) {
         operations.add(0, operation)
         this.notifyItemInserted(0)
+    }
+
+    fun setOnClickListener(listener: View.OnClickListener) {
+            this.listener = listener
     }
 }

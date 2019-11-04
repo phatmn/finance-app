@@ -31,7 +31,15 @@ class OperationsFragment : BaseFragment() {
 
         with(rvOperations) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = OperationsAdapter(dsOperations)
+            adapter = OperationsAdapter(dsOperations).also {
+                it.setOnClickListener(View.OnClickListener { view ->
+                    Intent(view?.context, AddOperationActivity::class.java).also { intent ->
+                        //todo pass the position to edit operation activity
+//                        intent.putExtra(EXTRA_OPERATION_ID, position)
+                        (view?.context as Activity).startActivity(intent)
+                    }
+                })
+            }
 
             // сначала сделал через кастомный FabBehavior - но там нужен ряд костылей:
             // 1. onNestedScroll не вызывается второй раз, т.к. вызов hide() ставит visibility = GONE, поэтому
