@@ -5,8 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".operation.AddOperationActivity"
+    tools:context=".account.AddAccountActivity"
     >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/account_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        />
 
     <EditText
         android:id="@+id/amount"
@@ -15,21 +28,19 @@
         android:layout_margin="8dp"
         android:inputType="numberSigned"
         android:textAlignment="viewEnd"
-        android:textAppearance="@style/H4"
-        app:layout_constraintBottom_toTopOf="@+id/rgIncomeExpense"
+        android:hint="@string/zero_amount"
+        app:layout_constraintTop_toBottomOf="@+id/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:hint="@string/zero_amount"
+        app:layout_constraintBottom_toTopOf="@+id/rgAccountType"
         />
 
     <RadioGroup
-        android:id="@+id/rgIncomeExpense"
+        android:id="@+id/rgAccountType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:checkedButton="@id/expense"
+        android:checkedButton="@id/card"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,40 +48,22 @@
         >
 
         <RadioButton
-            android:id="@+id/income"
+            android:id="@+id/cash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/Income"
+            android:text="@string/cash"
             />
 
         <RadioButton
-            android:id="@+id/expense"
+            android:id="@+id/card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/Expense"
+            android:text="@string/card"
             />
 
     </RadioGroup>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/rgIncomeExpense"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/comment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="@string/comment"
-        app:layout_constraintTop_toBottomOf="@+id/rvCategories"
-        />
 
     <Button
         android:id="@+id/btnSave"
@@ -81,7 +74,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/comment"
+        app:layout_constraintTop_toBottomOf="@id/rgAccountType"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

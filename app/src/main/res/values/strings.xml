@@ -11,4 +11,8 @@
     <string name="accounts">Accounts</string>
     <string name="analytics">Analytics</string>
     <string name="category">Category</string>
+    <string name="account">Account</string>
+    <string name="cash">cash</string>
+    <string name="card">card</string>
+    <string name="account_name">Account name</string>
 </resources>

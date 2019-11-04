@@ -11,4 +11,8 @@
     <string name="analytics">Аналитика</string>
     <string name="operations">Операции</string>
     <string name="category">Категория</string>
+    <string name="account">Счет</string>
+    <string name="account_name">Название счета</string>
+    <string name="card">карта</string>
+    <string name="cash">наличные</string>
 </resources>

@@ -10,7 +10,6 @@ import com.example.financeapp.category.CategoriesAdapter
 import com.example.financeapp.category.Category
 import com.example.financeapp.core.Money
 import com.example.financeapp.core.RUB
-import com.example.financeapp.core.USD
 import com.example.financeapp.util.EXTRA_OPERATION
 import com.example.financeapp.util.EXTRA_OPERATION_ID
 import kotlinx.android.synthetic.main.activity_add_operation.*
