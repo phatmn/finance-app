@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.BaseFragment
 import com.example.financeapp.R
 import com.example.financeapp.category.Category
+import com.example.financeapp.core.Money
+import com.example.financeapp.core.RUB
 import com.example.financeapp.util.*
+import kotlinx.android.synthetic.main.activity_add_operation.*
 import kotlinx.android.synthetic.main.fragment_operations.*
 
 
@@ -79,7 +82,12 @@ class OperationsFragment : BaseFragment() {
 
     private fun initOperations(): java.util.ArrayList<Operation> {
         return (1..30).map {
-            Operation(10 * it.toDouble(), Category(getString(R.string.category)), getString(R.string.comment))
+            Operation(
+                amount = Money(
+                    amount = 10 * it.toDouble(),
+                    currency = RUB()),
+                category = Category(getString(R.string.category)),
+                comment = getString(R.string.comment))
         } as ArrayList
     }
 }
