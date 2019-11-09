@@ -11,25 +11,24 @@ import com.example.financeapp.core.RUB
 import com.example.financeapp.util.EXTRA_ACCOUNT
 import com.example.financeapp.util.EXTRA_ACCOUNT_ID
 import kotlinx.android.synthetic.main.activity_add_account.*
+import java.math.BigDecimal
 
 class AddAccountActivity : AppCompatActivity() {
 
-    private var accountId : Int = 0
+    private val accountId : Int by lazy { intent.getIntExtra(EXTRA_ACCOUNT_ID, 0) }
     // todo default type setting
-    private var accountType : AccountType = Cash
+    private var accountType : AccountType = AccountType.Cash
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_account)
 
-        accountId = intent.getIntExtra(EXTRA_ACCOUNT_ID, 0)
-
-        rgAccountType.setOnCheckedChangeListener { group, checkedId ->
-            accountType = when(findViewById<RadioButton>(checkedId).text) {
-                getString(R.string.cash) -> Cash
-                getString(R.string.card) -> Card
+        rgAccountType.setOnCheckedChangeListener { _, checkedId ->
+            accountType = when(checkedId) {
+                R.id.cash -> AccountType.Cash
+                R.id.card -> AccountType.Card
                 // todo default type setting
-                else -> Cash
+                else -> AccountType.Cash
             }
         }
 
@@ -42,8 +41,8 @@ class AddAccountActivity : AppCompatActivity() {
                         type = accountType,
                         // todo default currency setting
                         amount = Money(
-                            amount = amount.text.toString().toDouble(),
-                            currency = RUB()
+                            amount = BigDecimal(amount.text.toString()),
+                            currency = RUB
                         )
                     )
                 )

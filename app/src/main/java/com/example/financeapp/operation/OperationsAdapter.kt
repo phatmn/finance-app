@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.operation.view.*
 class OperationsAdapter(private val operations: MutableList<Operation>) :
     RecyclerView.Adapter<OperationsAdapter.ViewHolder>() {
 
-    private var listener: View.OnClickListener? = null
+    private var listener: (View) -> Unit = {}
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val parentView: View = v
@@ -48,7 +48,7 @@ class OperationsAdapter(private val operations: MutableList<Operation>) :
         this.notifyItemInserted(0)
     }
 
-    fun setOnClickListener(listener: View.OnClickListener) {
+    fun setOnClickListener(listener: (View) -> Unit) {
             this.listener = listener
     }
 }

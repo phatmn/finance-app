@@ -13,9 +13,10 @@ import com.example.financeapp.core.RUB
 import com.example.financeapp.util.ADD_ACCOUNT_REQUEST
 import com.example.financeapp.util.EXTRA_ACCOUNT
 import kotlinx.android.synthetic.main.fragment_accounts.*
+import java.math.BigDecimal
 
 class AccountsFragment : BaseFragment() {
-    private var dsAccounts : ArrayList<Account> = arrayListOf()
+    private var dsAccounts : MutableList<Account> = arrayListOf()
 
     companion object {
         fun newInstance() : AccountsFragment {
@@ -33,13 +34,13 @@ class AccountsFragment : BaseFragment() {
         with(rvAccounts) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = AccountsAdapter(dsAccounts).also {
-                it.setOnClickListener(View.OnClickListener { view ->
-                    Intent(view?.context, AddAccountActivity::class.java).also { intent ->
+                it.setOnClickListener { view ->
+                    Intent(view.context, AddAccountActivity::class.java).also { intent ->
                         //todo pass the position to edit operation activity
 //                        intent.putExtra(EXTRA_OPERATION_ID, position)
-                        (view?.context as Activity).startActivity(intent)
+                        requireContext().startActivity(intent)
                     }
-                })
+                }
             }
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -74,14 +75,14 @@ class AccountsFragment : BaseFragment() {
         }
     }
 
-    private fun initAccounts(): java.util.ArrayList<Account> {
+    private fun initAccounts(): MutableList<Account> {
         return (1..5).map {
             Account(
                 name = getString(R.string.account) + it,
-                type = Card,
+                type = AccountType.Card,
                 amount = Money(
-                    amount = 10 * it.toDouble(),
-                    currency = RUB()
+                    amount = BigDecimal(10 * it),
+                    currency = RUB
                 )
             )
         } as ArrayList

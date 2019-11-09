@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.account.view.*
 class AccountsAdapter(private val accounts: MutableList<Account>) :
     RecyclerView.Adapter<AccountsAdapter.ViewHolder>() {
 
-    private var listener: View.OnClickListener? = null
+    private var listener: (View) -> Unit = {}
 
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val parentView: View = v
@@ -45,7 +45,7 @@ class AccountsAdapter(private val accounts: MutableList<Account>) :
         this.notifyItemInserted(0)
     }
 
-    fun setOnClickListener(listener: View.OnClickListener) {
+    fun setOnClickListener(listener: (View) -> Unit) {
         this.listener = listener
     }
 }

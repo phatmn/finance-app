@@ -13,16 +13,15 @@ import com.example.financeapp.core.RUB
 import com.example.financeapp.util.EXTRA_OPERATION
 import com.example.financeapp.util.EXTRA_OPERATION_ID
 import kotlinx.android.synthetic.main.activity_add_operation.*
+import java.math.BigDecimal
 
 class AddOperationActivity : AppCompatActivity() {
     private var dsCategories : ArrayList<Category> = arrayListOf()
-    private var operationId : Int = 0
+    private val operationId : Int by lazy { intent.getIntExtra(EXTRA_OPERATION_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_operation)
-
-        operationId = intent.getIntExtra(EXTRA_OPERATION_ID, 0)
 
         dsCategories = initCategories()
 
@@ -35,7 +34,7 @@ class AddOperationActivity : AppCompatActivity() {
             Intent().also {
                 it.putExtra(EXTRA_OPERATION, Operation(
                     // todo default currency setting
-                    Money(amount = amount.text.toString().toDouble(), currency = RUB()),
+                    Money(amount = BigDecimal(amount.text.toString()), currency = RUB),
                     //todo implement category selection
                     Category("Temp Category"),
                     comment.text.toString()
@@ -46,10 +45,10 @@ class AddOperationActivity : AppCompatActivity() {
             finish()
         }
 
-        if (operationId > 0) {
-            // todo fill operation fields by ID
+        // todo fill operation fields by ID
+//        if (operationId > 0) {
 //            amount.text = dsOperations[operationId].amount.toString()
-        }
+//        }
 
         amount.requestFocus()
     }

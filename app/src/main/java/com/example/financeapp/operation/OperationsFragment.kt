@@ -14,10 +14,11 @@ import com.example.financeapp.core.RUB
 import com.example.financeapp.util.*
 import kotlinx.android.synthetic.main.activity_add_operation.*
 import kotlinx.android.synthetic.main.fragment_operations.*
+import java.math.BigDecimal
 
 
 class OperationsFragment : BaseFragment() {
-    private var dsOperations : ArrayList<Operation> = arrayListOf()
+    private var dsOperations : MutableList<Operation> = arrayListOf()
 
     companion object {
         fun newInstance(): OperationsFragment {
@@ -35,13 +36,13 @@ class OperationsFragment : BaseFragment() {
         with(rvOperations) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = OperationsAdapter(dsOperations).also {
-                it.setOnClickListener(View.OnClickListener { view ->
-                    Intent(view?.context, AddOperationActivity::class.java).also { intent ->
+                it.setOnClickListener { view ->
+                    Intent(view.context, AddOperationActivity::class.java).also { intent ->
                         //todo pass the position to edit operation activity
 //                        intent.putExtra(EXTRA_OPERATION_ID, position)
-                        (view?.context as Activity).startActivity(intent)
+                        requireContext().startActivity(intent)
                     }
-                })
+                }
             }
 
             // сначала сделал через кастомный FabBehavior - но там нужен ряд костылей:
@@ -80,12 +81,12 @@ class OperationsFragment : BaseFragment() {
         }
     }
 
-    private fun initOperations(): java.util.ArrayList<Operation> {
+    private fun initOperations(): MutableList<Operation> {
         return (1..30).map {
             Operation(
                 amount = Money(
-                    amount = 10 * it.toDouble(),
-                    currency = RUB()),
+                    amount = BigDecimal(10 * it),
+                    currency = RUB),
                 category = Category(getString(R.string.category)),
                 comment = getString(R.string.comment))
         } as ArrayList
