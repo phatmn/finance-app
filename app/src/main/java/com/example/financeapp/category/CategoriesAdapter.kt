@@ -11,20 +11,29 @@ import kotlinx.android.synthetic.main.category.view.*
 class CategoriesAdapter(private val categories: List<Category>) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    var selectedPos: Int = RecyclerView.NO_POSITION
+
+    inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val name: TextView = v.name
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.category, parent, false)
-
-        return ViewHolder(v)
+        return ViewHolder(view)
     }
 
     override fun getItemCount() = categories.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = categories[position].name
+        with(holder) {
+            name.text = categories[position].name
+            itemView.isSelected = (selectedPos == position)
+            itemView.setOnClickListener {
+                notifyItemChanged(selectedPos)
+                selectedPos = layoutPosition
+                notifyItemChanged(selectedPos)
+            }
+        }
     }
 }

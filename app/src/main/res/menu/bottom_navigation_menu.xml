@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/menu_ops"
         android:icon="@drawable/ic_menu_ops"
-        android:title="Operations" />
+        android:title="@string/operations" />
     <item
         android:id="@+id/menu_accounts"
         android:icon="@drawable/ic_menu_accounts"
-        android:title="Accounts" />
+        android:title="@string/accounts" />
     <item
         android:id="@+id/menu_analytics"
         android:icon="@drawable/ic_menu_analytics"
-        android:title="Analytics" />
+        android:title="@string/analytics" />
 </menu>

@@ -1,13 +1,22 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.Material.TextView">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Material.Button">
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="H3" parent="TextAppearance.MaterialComponents.Headline3">
-        <item name="fontFamily">@font/knewave</item>
     </style>
 
     <style name="H4" parent="TextAppearance.MaterialComponents.Headline4">
@@ -24,7 +33,6 @@
 
     <style name="category" parent="AppTheme">
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@color/colorPrimary</item>
     </style>
 
 </resources>

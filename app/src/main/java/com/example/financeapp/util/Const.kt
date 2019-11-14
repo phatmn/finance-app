@@ -1,4 +1,8 @@
 package com.example.financeapp.util
 
 const val ADD_OPERATION_REQUEST = 1
+const val ADD_ACCOUNT_REQUEST = 2
 const val EXTRA_OPERATION = "EXTRA_OPERATION"
+const val EXTRA_ACCOUNT = "EXTRA_ACCOUNT"
+const val EXTRA_OPERATION_ID = "EXTRA_OPERATION_ID"
+const val EXTRA_ACCOUNT_ID = "EXTRA_ACCOUNT_ID"

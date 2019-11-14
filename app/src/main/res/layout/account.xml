@@ -6,51 +6,43 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="?android:attr/selectableItemBackground"
-    >
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
-        android:id="@+id/operImage"
+        android:id="@+id/type"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_local_grocery_store_black_24dp" />
+        tools:src="@drawable/ic_payment_black_24dp" />
 
     <TextView
-        android:id="@+id/operCategory"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:textAppearance="@style/H5"
-        app:layout_constraintEnd_toStartOf="@+id/operAmount"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/amount"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/operImage"
+        app:layout_constraintStart_toEndOf="@+id/type"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="[Category]" />
+        tools:text="[Account]" />
 
     <TextView
-        android:id="@+id/operAmount"
+        android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
+        android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:textAppearance="@style/H5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="[0.00]" />
-
-    <TextView
-        android:id="@+id/operComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:paddingStart="8dp"
-        android:textAppearance="@style/body2"
-        app:layout_constraintStart_toEndOf="@+id/operImage"
-        app:layout_constraintTop_toBottomOf="@+id/operCategory"
-        tools:text="[Comment]" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
