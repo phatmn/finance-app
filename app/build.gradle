@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -34,6 +36,8 @@ dependencies {
     androidTestImplementation xtest.runner
     androidTestImplementation espresso.espressoCore
 
+    kapt glide.compiler
+
     implementation stdKotlin.kotlinStdlibJdk7
     implementation xcore.coreKtx
     implementation xlegacy.legacySupport4
@@ -41,4 +45,6 @@ dependencies {
     implementation appcompat.appcompat
     implementation constraintlayout.constraintlayout
     implementation recyclerview.recyclerview
+    implementation lottie.lottie
+    implementation glide.glide
 }
