@@ -10,6 +10,8 @@ import kotlinx.android.synthetic.main.progress_bar.*
 
 class AnalyticsFragment : BaseFragment() {
 
+    val handler = Handler()
+    
     companion object {
         fun newInstance() : AnalyticsFragment {
             return AnalyticsFragment()
@@ -21,8 +23,7 @@ class AnalyticsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Handler().also {
-            it.postDelayed({
+        handler.postDelayed({
                 progress.visibility = View.INVISIBLE
                 analyticsView.visibility = View.VISIBLE
 
@@ -30,6 +31,11 @@ class AnalyticsFragment : BaseFragment() {
                     .load("https://github.com/bumptech/glide/raw/master/static/glide_logo.png")
                     .into(image)
             }, 2000)
-        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        handler.removeCallbacksAndMessages(null)
     }
 }
