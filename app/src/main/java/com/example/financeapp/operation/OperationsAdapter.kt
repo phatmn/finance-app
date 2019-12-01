@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.R
 import kotlinx.android.synthetic.main.operation.view.*
 
-class OperationsAdapter(private val operations: MutableList<Operation>) :
+class OperationsAdapter(private val operations: MutableList<Operation> = arrayListOf()) :
     RecyclerView.Adapter<OperationsAdapter.ViewHolder>() {
 
     private var listener: (View) -> Unit = {}

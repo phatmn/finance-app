@@ -1,24 +1,27 @@
 package com.example.financeapp.operation
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Display
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.BaseFragment
 import com.example.financeapp.R
 import com.example.financeapp.category.Category
+import com.example.financeapp.core.InMemoryStorage
 import com.example.financeapp.core.Money
 import com.example.financeapp.core.RUB
-import com.example.financeapp.util.*
-import kotlinx.android.synthetic.main.activity_add_operation.*
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_operations.*
 import java.math.BigDecimal
 
 
 class OperationsFragment : BaseFragment() {
-    private var dsOperations : MutableList<Operation> = arrayListOf()
+    private var dsOperations: MutableList<Operation> = arrayListOf()
+    private var disposable: Disposable? = null
 
     companion object {
         fun newInstance(): OperationsFragment {
@@ -31,11 +34,11 @@ class OperationsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dsOperations = initOperations()
+        InMemoryStorage.fromCollection(initOperations())
 
         with(rvOperations) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = OperationsAdapter(dsOperations).also {
+            adapter = OperationsAdapter().also {
                 it.setOnClickListener { view ->
                     Intent(view.context, AddOperationActivity::class.java).also { intent ->
                         //todo pass the position to edit operation activity
@@ -61,34 +64,51 @@ class OperationsFragment : BaseFragment() {
             })
         }
 
-        fab.setOnClickListener {
-            Intent(activity, AddOperationActivity::class.java).also { intent ->
-                startActivityForResult(intent, ADD_OPERATION_REQUEST)
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == ADD_OPERATION_REQUEST) {
-                data?.extras?.getParcelable<Operation>(EXTRA_OPERATION)?.let {
+        disposable = InMemoryStorage
+            .createObservable()
+            .subscribeBy(
+                onNext = {
                     (rvOperations.adapter as OperationsAdapter).addItem(it)
                     rvOperations.scrollToPosition(0)
                 }
+            )
+
+        fab.setOnClickListener {
+            Intent(activity, AddOperationActivity::class.java).also { intent ->
+                //                startActivityForResult(intent, ADD_OPERATION_REQUEST)
+                startActivity(intent)
             }
         }
     }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (resultCode == Activity.RESULT_OK) {
+//            if (requestCode == ADD_OPERATION_REQUEST) {
+//                data?.extras?.getParcelable<Operation>(EXTRA_OPERATION)?.let {
+//                    (rvOperations.adapter as OperationsAdapter).addItem(it)
+//                    rvOperations.scrollToPosition(0)
+//                }
+//            }
+//        }
+//    }
 
     private fun initOperations(): MutableList<Operation> {
         return (1..30).map {
             Operation(
                 amount = Money(
                     amount = BigDecimal(10 * it),
-                    currency = RUB),
+                    currency = RUB
+                ),
                 category = Category(getString(R.string.category)),
-                comment = getString(R.string.comment))
+                comment = getString(R.string.comment)
+            )
         } as ArrayList
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable?.dispose()
     }
 }

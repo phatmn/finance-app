@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.progress_bar.*
 
 class AnalyticsFragment : BaseFragment() {
 
-    val handler = Handler()
+    private val handler = Handler()
     
     companion object {
         fun newInstance() : AnalyticsFragment {
@@ -24,8 +24,8 @@ class AnalyticsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handler.postDelayed({
-                progress.visibility = View.INVISIBLE
-                analyticsView.visibility = View.VISIBLE
+                progress.hide()
+                analyticsView.show()
 
                 Glide.with(this)
                     .load("https://github.com/bumptech/glide/raw/master/static/glide_logo.png")

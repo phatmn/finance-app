@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.financeapp.R
 import com.example.financeapp.category.CategoriesAdapter
 import com.example.financeapp.category.Category
+import com.example.financeapp.core.InMemoryStorage
 import com.example.financeapp.core.Money
 import com.example.financeapp.core.RUB
 import com.example.financeapp.util.EXTRA_OPERATION
@@ -16,8 +17,8 @@ import kotlinx.android.synthetic.main.activity_add_operation.*
 import java.math.BigDecimal
 
 class AddOperationActivity : AppCompatActivity() {
-    private var dsCategories : ArrayList<Category> = arrayListOf()
-    private val operationId : Int by lazy { intent.getIntExtra(EXTRA_OPERATION_ID, 0) }
+    private var dsCategories: ArrayList<Category> = arrayListOf()
+    private val operationId: Int by lazy { intent.getIntExtra(EXTRA_OPERATION_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,22 +27,35 @@ class AddOperationActivity : AppCompatActivity() {
         dsCategories = initCategories()
 
         with(rvCategories) {
-            layoutManager = LinearLayoutManager(this@AddOperationActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(
+                this@AddOperationActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
             adapter = CategoriesAdapter(dsCategories)
         }
 
         btnSave.setOnClickListener {
-            Intent().also {
-                it.putExtra(EXTRA_OPERATION, Operation(
+            InMemoryStorage.addOperation(
+                Operation(
                     // todo default currency setting
                     Money(amount = BigDecimal(amount.text.toString()), currency = RUB),
                     //todo implement category selection
                     Category("Temp Category"),
                     comment.text.toString()
-                    )
                 )
-                setResult(Activity.RESULT_OK, it)
-            }
+            )
+//            Intent().also {
+//                it.putExtra(EXTRA_OPERATION, Operation(
+//                    // todo default currency setting
+//                    Money(amount = BigDecimal(amount.text.toString()), currency = RUB),
+//                    //todo implement category selection
+//                    Category("Temp Category"),
+//                    comment.text.toString()
+//                    )
+//                )
+//                setResult(Activity.RESULT_OK, it)
+//            }
             finish()
         }
 
