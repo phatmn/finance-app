@@ -46,4 +46,6 @@ dependencies {
     implementation glide.glide
     implementation rxjava2.rxkotlin
     implementation rxjava2.rxandroid
+    implementation xprefs.xprefs
+    implementation gson.gson
 }

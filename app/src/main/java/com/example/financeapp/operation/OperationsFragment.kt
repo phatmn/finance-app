@@ -1,9 +1,7 @@
 package com.example.financeapp.operation
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.Display
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,15 +11,12 @@ import com.example.financeapp.category.Category
 import com.example.financeapp.core.InMemoryStorage
 import com.example.financeapp.core.Money
 import com.example.financeapp.core.RUB
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.subscribeBy
+import com.example.financeapp.util.Util
 import kotlinx.android.synthetic.main.fragment_operations.*
 import java.math.BigDecimal
 
-
 class OperationsFragment : BaseFragment() {
-    private var dsOperations: MutableList<Operation> = arrayListOf()
-    private var disposable: Disposable? = null
+    private var operations: MutableList<Operation> = arrayListOf()
 
     companion object {
         fun newInstance(): OperationsFragment {
@@ -31,14 +26,27 @@ class OperationsFragment : BaseFragment() {
 
     override fun layoutId(): Int = R.layout.fragment_operations
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Util.getFromSharedPrefs<MutableList<Operation>>(
+            requireContext(),
+            "operations"
+        )?.let {
+            operations = it
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        InMemoryStorage.fromCollection(initOperations())
+        if (operations.size == 0)
+            operations = initOperations()
+
+        InMemoryStorage.operations.addAll(operations)
 
         with(rvOperations) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = OperationsAdapter().also {
+            adapter = OperationsAdapter(InMemoryStorage.operations).also {
                 it.setOnClickListener { view ->
                     Intent(view.context, AddOperationActivity::class.java).also { intent ->
                         //todo pass the position to edit operation activity
@@ -64,14 +72,21 @@ class OperationsFragment : BaseFragment() {
             })
         }
 
-        disposable = InMemoryStorage
-            .createObservable()
-            .subscribeBy(
-                onNext = {
-                    (rvOperations.adapter as OperationsAdapter).addItem(it)
+        InMemoryStorage.registerObserver { action: InMemoryStorage.Action, subject: Any ->
+            val adapter = rvOperations.adapter as OperationsAdapter
+            when (action) {
+                InMemoryStorage.Action.AddOperation -> {
+                    adapter.addItem(subject as Operation)
                     rvOperations.scrollToPosition(0)
                 }
-            )
+                InMemoryStorage.Action.RemoveOperation -> {
+                    val position =
+                        adapter.removeItem(subject as Operation)
+                    if (position >= 0)
+                        rvOperations.scrollToPosition(position)
+                }
+            }
+        }
 
         fab.setOnClickListener {
             Intent(activity, AddOperationActivity::class.java).also { intent ->
@@ -109,6 +124,6 @@ class OperationsFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable?.dispose()
+        Util.saveToSharedPrefs(requireContext(), "operations", InMemoryStorage.operations)
     }
 }

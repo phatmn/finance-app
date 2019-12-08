@@ -48,6 +48,15 @@ class OperationsAdapter(private val operations: MutableList<Operation> = arrayLi
         this.notifyItemInserted(0)
     }
 
+    fun removeItem(operation: Operation) : Int {
+        val index = operations.indexOf(operation)
+        if (index >= 0) {
+            operations.removeAt(index)
+            this.notifyItemRemoved(index)
+        }
+        return index
+    }
+
     fun setOnClickListener(listener: (View) -> Unit) {
             this.listener = listener
     }

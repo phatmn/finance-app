@@ -1,21 +1,37 @@
 package com.example.financeapp.core
 
 import com.example.financeapp.operation.Operation
-import io.reactivex.Observable
-import io.reactivex.rxkotlin.toObservable
 
-object InMemoryStorage {
-    private var ops : MutableList<Operation> = arrayListOf()
+object InMemoryStorage{
+    private var callbacks: MutableList<(action: Action, subject: Any) -> Any> = arrayListOf()
 
-    fun createObservable() : Observable<Operation> {
-        return ops.toObservable()
+    var operations: MutableList<Operation> = arrayListOf()
+
+    enum class Action { AddOperation, RemoveOperation }
+
+    fun addOperation(operation: Operation) {
+        operations.add(operation)
+        notifyObservers(Action.AddOperation, operation)
     }
 
-    fun fromCollection(ops : MutableCollection<Operation>) {
-        this.ops = ops as MutableList<Operation>
+    fun removeOperation(operation: Operation) {
+        operations.remove(operation)
+        notifyObservers(Action.RemoveOperation, operation)
     }
 
-    fun addOperation(op : Operation) {
-        ops.add(op)
+    fun registerObserver(callback: (action: Action, subject: Any) -> Any) {
+        callbacks.add(callback)
+    }
+
+    fun removeObserver(callback: (action: Action, subject: Any) -> Any) {
+        if (callbacks.indexOf(callback) >= 0) {
+            callbacks.remove(callback)
+        }
+    }
+
+    fun notifyObservers(action: Action, subject: Any) {
+        for (callback in callbacks) {
+            callback(action, subject)
+        }
     }
 }
