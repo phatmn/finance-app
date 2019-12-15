@@ -4,15 +4,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
-        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="android:textViewStyle">@style/robotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/robotoButtonStyle</item>
+<!--        <item name="shapeAppearanceSmallComponent">@style/shapeAppearance</item>-->
+<!--        <item name="shapeAppearanceMediumComponent">@style/shapeAppearance</item>-->
+<!--        <item name="shapeAppearanceLargeComponent">@style/shapeAppearance</item>-->
     </style>
 
-    <style name="RobotoTextViewStyle" parent="android:Widget.Material.TextView">
+    <style name="robotoTextViewStyle" parent="android:Widget.Material.TextView">
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="RobotoButtonStyle" parent="android:Widget.Material.Button">
+    <style name="robotoButtonStyle" parent="android:Widget.Material.Button">
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
@@ -34,5 +37,10 @@
     <style name="category" parent="AppTheme">
         <item name="android:textColor">@color/white</item>
     </style>
+
+<!--    <style name="shapeAppearance" parent="ShapeAppearance.MaterialComponents.LargeComponent">-->
+<!--        <item name="cornerFamily">rounded</item>-->
+<!--        <item name="cornerSize">16dp</item>-->
+<!--    </style>-->
 
 </resources>

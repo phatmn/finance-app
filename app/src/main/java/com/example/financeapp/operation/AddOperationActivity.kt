@@ -1,7 +1,5 @@
 package com.example.financeapp.operation
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +9,6 @@ import com.example.financeapp.category.Category
 import com.example.financeapp.core.InMemoryStorage
 import com.example.financeapp.core.Money
 import com.example.financeapp.core.RUB
-import com.example.financeapp.util.EXTRA_OPERATION
 import com.example.financeapp.util.EXTRA_OPERATION_ID
 import kotlinx.android.synthetic.main.activity_add_operation.*
 import java.math.BigDecimal

@@ -10,7 +10,7 @@ object InMemoryStorage{
     enum class Action { AddOperation, RemoveOperation }
 
     fun addOperation(operation: Operation) {
-        operations.add(operation)
+        operations.add(0, operation)
         notifyObservers(Action.AddOperation, operation)
     }
 

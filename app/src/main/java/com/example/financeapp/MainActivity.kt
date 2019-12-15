@@ -1,9 +1,11 @@
 package com.example.financeapp
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.financeapp.account.AccountsFragment
 import com.example.financeapp.analytics.AnalyticsFragment
+import com.example.financeapp.operation.OperationsFilterFragment
 import com.example.financeapp.operation.OperationsFragment
 import com.example.financeapp.util.addFragment
 import com.example.financeapp.util.replaceFragment
@@ -43,4 +45,18 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.title) {
+            "filter" -> {
+                OperationsFilterFragment
+                    .newInstance()
+                    .show(supportFragmentManager,"filter")
+
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

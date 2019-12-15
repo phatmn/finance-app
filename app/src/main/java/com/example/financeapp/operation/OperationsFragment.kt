@@ -2,6 +2,9 @@ package com.example.financeapp.operation
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +18,8 @@ import com.example.financeapp.util.Util
 import kotlinx.android.synthetic.main.fragment_operations.*
 import java.math.BigDecimal
 
-class OperationsFragment : BaseFragment() {
-    private var operations: MutableList<Operation> = arrayListOf()
 
+class OperationsFragment : BaseFragment() {
     companion object {
         fun newInstance(): OperationsFragment {
             return OperationsFragment()
@@ -28,21 +30,32 @@ class OperationsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+
         Util.getFromSharedPrefs<MutableList<Operation>>(
             requireContext(),
             "operations"
         )?.let {
-            operations = it
+            InMemoryStorage.operations = it
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        if (menu.size() == 0) {
+            menu.add("filter")
+                .setIcon(R.drawable.ic_filter)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (operations.size == 0)
-            operations = initOperations()
-
-        InMemoryStorage.operations.addAll(operations)
+        if (InMemoryStorage.operations.size == 0)
+            InMemoryStorage.operations.addAll(initOperations())
 
         with(rvOperations) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -72,42 +85,31 @@ class OperationsFragment : BaseFragment() {
             })
         }
 
-        InMemoryStorage.registerObserver { action: InMemoryStorage.Action, subject: Any ->
+        InMemoryStorage.registerObserver { action: InMemoryStorage.Action, _: Any ->
             val adapter = rvOperations.adapter as OperationsAdapter
             when (action) {
                 InMemoryStorage.Action.AddOperation -> {
-                    adapter.addItem(subject as Operation)
+                    adapter.notifyItemInserted(0)
                     rvOperations.scrollToPosition(0)
                 }
-                InMemoryStorage.Action.RemoveOperation -> {
-                    val position =
-                        adapter.removeItem(subject as Operation)
-                    if (position >= 0)
-                        rvOperations.scrollToPosition(position)
+//                InMemoryStorage.Action.RemoveOperation -> {
+//                    val position = InMemoryStorage.operations.indexOf(subject as Operation)
+//                    if (position >= 0)
+//                        rvOperations.scrollToPosition(position)
+//                }
+                else -> {
                 }
             }
         }
 
         fab.setOnClickListener {
-            Intent(activity, AddOperationActivity::class.java).also { intent ->
-                //                startActivityForResult(intent, ADD_OPERATION_REQUEST)
-                startActivity(intent)
+            Intent(activity, AddOperationActivity::class.java).also {
+                startActivity(it)
             }
         }
-    }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (resultCode == Activity.RESULT_OK) {
-//            if (requestCode == ADD_OPERATION_REQUEST) {
-//                data?.extras?.getParcelable<Operation>(EXTRA_OPERATION)?.let {
-//                    (rvOperations.adapter as OperationsAdapter).addItem(it)
-//                    rvOperations.scrollToPosition(0)
-//                }
-//            }
-//        }
-//    }
+//        BottomSheetBehavior.from(bottom_sheet).state = BottomSheetBehavior.STATE_HIDDEN
+    }
 
     private fun initOperations(): MutableList<Operation> {
         return (1..30).map {
