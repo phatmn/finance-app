@@ -45,7 +45,7 @@ class AddOperationActivity : AppCompatActivity() {
 //            Intent().also {
 //                it.putExtra(EXTRA_OPERATION, Operation(
 //                    // todo default currency setting
-//                    Money(amount = BigDecimal(amount.text.toString()), currency = RUB),
+//                    Money(value = BigDecimal(value.text.toString()), currency = RUB),
 //                    //todo implement category selection
 //                    Category("Temp Category"),
 //                    comment.text.toString()
@@ -58,7 +58,7 @@ class AddOperationActivity : AppCompatActivity() {
 
         // todo fill operation fields by ID
 //        if (operationId > 0) {
-//            amount.text = dsOperations[operationId].amount.toString()
+//            value.text = dsOperations[operationId].value.toString()
 //        }
 
         amount.requestFocus()

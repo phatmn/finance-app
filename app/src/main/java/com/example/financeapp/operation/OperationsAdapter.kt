@@ -35,7 +35,7 @@ class OperationsAdapter(private val operations: MutableList<Operation> = arrayLi
         // todo image category change
         // todo category change
         with(holder) {
-            amount.text = operations[position].amount.toString()
+            amount.text = operations[position].value.toString()
             category.text = operations[position].category.name
             comment.text = operations[position].comment
             image.setImageResource(R.drawable.ic_local_grocery_store_black_24dp)

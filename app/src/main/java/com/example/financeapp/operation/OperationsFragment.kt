@@ -85,18 +85,16 @@ class OperationsFragment : BaseFragment() {
             })
         }
 
-        InMemoryStorage.registerObserver { action: InMemoryStorage.Action, _: Any ->
+        InMemoryStorage.registerObserver { action: InMemoryStorage.Action, _: Any? ->
             val adapter = rvOperations.adapter as OperationsAdapter
             when (action) {
                 InMemoryStorage.Action.AddOperation -> {
                     adapter.notifyItemInserted(0)
                     rvOperations.scrollToPosition(0)
                 }
-//                InMemoryStorage.Action.RemoveOperation -> {
-//                    val position = InMemoryStorage.operations.indexOf(subject as Operation)
-//                    if (position >= 0)
-//                        rvOperations.scrollToPosition(position)
-//                }
+                InMemoryStorage.Action.Filter -> {
+                    adapter.notifyDataSetChanged()
+                }
                 else -> {
                 }
             }
@@ -114,7 +112,7 @@ class OperationsFragment : BaseFragment() {
     private fun initOperations(): MutableList<Operation> {
         return (1..30).map {
             Operation(
-                amount = Money(
+                value = Money(
                     amount = BigDecimal(10 * it),
                     currency = RUB
                 ),

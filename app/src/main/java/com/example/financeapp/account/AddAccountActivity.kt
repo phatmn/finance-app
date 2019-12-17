@@ -53,7 +53,7 @@ class AddAccountActivity : AppCompatActivity() {
 
         if (accountId > 0) {
             // todo fill account fields by ID
-//            amount.text = dsAccounts[accountId].amount.toString()
+//            value.text = dsAccounts[accountId].value.toString()
         }
 
         name.requestFocus()

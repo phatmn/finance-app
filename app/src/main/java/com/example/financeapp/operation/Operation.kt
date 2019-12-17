@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Operation(
-    val amount: Money = Money(),
+    val value: Money = Money(),
     val category : Category = Category(),
     val comment : String = ""
 ) : Parcelable

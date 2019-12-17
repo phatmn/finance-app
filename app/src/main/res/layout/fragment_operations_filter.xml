@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,9 +16,45 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:id="@+id/tvAmountFrom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="bottom_sheet_content" />
+        android:text="amount from"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/amountFrom"
+        app:layout_constraintBaseline_toBaselineOf="@id/amountFrom"
+        />
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/amountFrom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvAmountFrom"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvAmountTo"
+        />
+
+    <TextView
+        android:id="@+id/tvAmountTo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="to"
+        app:layout_constraintStart_toStartOf="@id/amountFrom"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/amountTo"
+        app:layout_constraintBaseline_toBaselineOf="@id/amountTo"
+        />
+
+    <EditText
+        android:id="@+id/amountTo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvAmountTo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
