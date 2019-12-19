@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.R
 import kotlinx.android.synthetic.main.operation.view.*
 
-class OperationsAdapter(private val operations: MutableList<Operation> = arrayListOf()) :
+class OperationsAdapter(var operations: MutableList<Operation> = arrayListOf()) :
     RecyclerView.Adapter<OperationsAdapter.ViewHolder>() {
 
     private var listener: (View) -> Unit = {}
@@ -41,20 +41,6 @@ class OperationsAdapter(private val operations: MutableList<Operation> = arrayLi
             image.setImageResource(R.drawable.ic_local_grocery_store_black_24dp)
             parentView.setOnClickListener(listener)
         }
-    }
-
-    fun addItem(operation: Operation) {
-        operations.add(0, operation)
-        this.notifyItemInserted(0)
-    }
-
-    fun removeItem(operation: Operation) : Int {
-        val index = operations.indexOf(operation)
-        if (index >= 0) {
-            operations.removeAt(index)
-            this.notifyItemRemoved(index)
-        }
-        return index
     }
 
     fun setOnClickListener(listener: (View) -> Unit) {

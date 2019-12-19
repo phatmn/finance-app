@@ -85,7 +85,7 @@ class OperationsFragment : BaseFragment() {
             })
         }
 
-        InMemoryStorage.registerObserver { action: InMemoryStorage.Action, _: Any? ->
+        InMemoryStorage.registerObserver { action: InMemoryStorage.Action, subject: Any? ->
             val adapter = rvOperations.adapter as OperationsAdapter
             when (action) {
                 InMemoryStorage.Action.AddOperation -> {
@@ -93,6 +93,7 @@ class OperationsFragment : BaseFragment() {
                     rvOperations.scrollToPosition(0)
                 }
                 InMemoryStorage.Action.Filter -> {
+                    adapter.operations = subject as MutableList<Operation>
                     adapter.notifyDataSetChanged()
                 }
                 else -> {
