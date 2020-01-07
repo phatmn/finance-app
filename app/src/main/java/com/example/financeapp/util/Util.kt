@@ -10,11 +10,15 @@ import com.example.financeapp.core.GsonAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import java.math.BigDecimal
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 object Util {
     val gson: Gson =
         GsonBuilder()
             .registerTypeAdapter(Currency::class.java, GsonAdapter<Currency>())
+            .registerTypeAdapter(object : TypeToken<Map<String, BigDecimal>>() {}.type, GsonAdapter<Map<String, BigDecimal>>())
             .create()
 
     fun <T> saveToSharedPrefs(context: Context, name: String, obj: T) {
@@ -49,3 +53,11 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int): Boolean
     return true
 }
 
+fun Double.round(scale: Int) : Double {
+    val s = 10.0.pow(scale.toDouble())
+    return (this * s).roundToInt() / s
+}
+
+fun Double.reverse() : Double {
+    return if (this > 0) 1 / this else 0.0
+}

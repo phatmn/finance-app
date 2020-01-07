@@ -24,7 +24,6 @@ object InMemoryStorage {
     fun filter(from: BigDecimal?, to: BigDecimal?) {
         val fromValue = from ?: BigDecimal.ZERO
         val toValue = to ?: BigDecimal(Long.MAX_VALUE)
-        val x: List<Category> = operations.mapNotNull { it.category }
         notifyObservers(Action.Filter, operations.filter {
             it.value.amount in fromValue..toValue
         }.toMutableList())

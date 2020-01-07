@@ -3,13 +3,13 @@ package com.example.financeapp.core
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-sealed class Currency(val symbol: String = "") : Parcelable
+sealed class Currency(val symbol: String = "", val code: String = "") : Parcelable
 
 @Parcelize
-object USD : Currency("$")
+object USD : Currency("$", "USD")
 
 @Parcelize
-object EUR : Currency("€")
+object EUR : Currency("€", "EUR")
 
 @Parcelize
-object RUB : Currency("\u20BD")
+object RUB : Currency("\u20BD", "RUB")

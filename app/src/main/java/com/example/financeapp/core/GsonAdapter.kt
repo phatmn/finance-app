@@ -19,12 +19,27 @@ internal class GsonAdapter<T : Any> : JsonSerializer<T>, JsonDeserializer<T> {
         elem: JsonElement,
         interfaceType: Type?,
         context: JsonDeserializationContext
-    ): T {
-        val wrapper = elem as JsonObject
-        val typeName = get(wrapper, "type")
-        val data = get(wrapper, "data")
-        val actualType: Type = typeForName(typeName)
-        return context.deserialize(data, actualType)
+    ): T? {
+        var data: JsonElement? = null
+        var actualType: Type? = null
+
+        if (interfaceType == Currency::class.java && elem !is JsonPrimitive) {
+            val wrapper = elem as JsonObject
+            val typeName = get(wrapper, "type")
+            data = get(wrapper, "data")
+            actualType = typeForName(typeName)
+        }
+
+        return if (data != null) { // our serialization with type
+            context.deserialize(data, actualType)
+        } else {                   // instatiating Currency class from string
+            Currency::class
+                .sealedSubclasses
+                .firstOrNull {
+                    it.simpleName == elem.asString
+                }
+                ?.objectInstance as T?
+        }
     }
 
     private fun typeForName(typeElem: JsonElement): Type {

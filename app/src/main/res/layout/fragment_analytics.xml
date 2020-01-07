@@ -32,4 +32,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/analyticsView" />
 
+    <TextView
+        android:id="@+id/currencyRates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "[USD = 65.0000, EUR = 70.0000]"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

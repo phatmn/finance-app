@@ -25,13 +25,25 @@ class OperationsFilterFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        amountFrom.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                InMemoryStorage.filter(
-                    (amountFrom as TextView).text.toString()?.toBigDecimalOrNull(),
-                    (amountTo as TextView).text.toString()?.toBigDecimalOrNull()
-                )
-            }
+
+        btnClear.setOnClickListener {
+            amountFrom.text.clear()
+            amountTo.text.clear()
+            applyChanges()
         }
+
+        btnApply.setOnClickListener {
+            applyChanges()
+        }
+
+        amountFrom.requestFocus()
+
+    }
+
+    private fun applyChanges() {
+        InMemoryStorage.filter(
+            (amountFrom as TextView).text.toString().toBigDecimalOrNull(),
+            (amountTo as TextView).text.toString().toBigDecimalOrNull()
+        )
     }
 }

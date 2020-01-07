@@ -93,7 +93,9 @@ class OperationsFragment : BaseFragment() {
                     rvOperations.scrollToPosition(0)
                 }
                 InMemoryStorage.Action.Filter -> {
-                    adapter.operations = subject as MutableList<Operation>
+                    if (subject is MutableList<*>)
+                        @Suppress("UNCHECKED_CAST")
+                        adapter.operations = subject as MutableList<Operation>
                     adapter.notifyDataSetChanged()
                 }
                 else -> {

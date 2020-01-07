@@ -31,9 +31,12 @@
         android:id="@+id/amountFrom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:textAlignment="viewEnd"
         app:layout_constraintStart_toEndOf="@id/tvAmountFrom"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tvAmountTo"
+        app:layout_constraintBottom_toTopOf="@id/btnApply"
         />
 
     <TextView
@@ -52,9 +55,35 @@
         android:id="@+id/amountTo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:textAlignment="viewEnd"
         app:layout_constraintStart_toEndOf="@id/tvAmountTo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnApply"
+        />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@id/amountTo"
+        app:layout_constraintEnd_toStartOf="@id/btnApply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btnApply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@id/amountTo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

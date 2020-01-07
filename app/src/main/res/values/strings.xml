@@ -15,4 +15,5 @@
     <string name="cash">cash</string>
     <string name="card">card</string>
     <string name="account_name">Account name</string>
+    <string name="currencyRates" translatable="false">%1$s: %2$.2f   %3$s: %4$.2f</string>
 </resources>
