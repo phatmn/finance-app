@@ -3,7 +3,6 @@ package com.example.financeapp.account
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.financeapp.R
 import com.example.financeapp.core.Money
@@ -53,7 +52,7 @@ class AddAccountActivity : AppCompatActivity() {
 
         if (accountId > 0) {
             // todo fill account fields by ID
-//            amount.text = dsAccounts[accountId].amount.toString()
+//            value.text = dsAccounts[accountId].value.toString()
         }
 
         name.requestFocus()

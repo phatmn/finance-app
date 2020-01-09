@@ -1,25 +1,25 @@
 package com.example.financeapp.operation
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.BaseFragment
 import com.example.financeapp.R
 import com.example.financeapp.category.Category
+import com.example.financeapp.core.InMemoryStorage
 import com.example.financeapp.core.Money
 import com.example.financeapp.core.RUB
-import com.example.financeapp.util.*
-import kotlinx.android.synthetic.main.activity_add_operation.*
+import com.example.financeapp.util.Util
 import kotlinx.android.synthetic.main.fragment_operations.*
 import java.math.BigDecimal
 
 
 class OperationsFragment : BaseFragment() {
-    private var dsOperations : MutableList<Operation> = arrayListOf()
-
     companion object {
         fun newInstance(): OperationsFragment {
             return OperationsFragment()
@@ -28,14 +28,38 @@ class OperationsFragment : BaseFragment() {
 
     override fun layoutId(): Int = R.layout.fragment_operations
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+
+        Util.getFromSharedPrefs<MutableList<Operation>>(
+            requireContext(),
+            "operations"
+        )?.let {
+            InMemoryStorage.operations = it
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        if (menu.size() == 0) {
+            menu.add("filter")
+                .setIcon(R.drawable.ic_filter)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dsOperations = initOperations()
+        if (InMemoryStorage.operations.size == 0)
+            InMemoryStorage.operations.addAll(initOperations())
 
         with(rvOperations) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = OperationsAdapter(dsOperations).also {
+            adapter = OperationsAdapter(InMemoryStorage.operations).also {
                 it.setOnClickListener { view ->
                     Intent(view.context, AddOperationActivity::class.java).also { intent ->
                         //todo pass the position to edit operation activity
@@ -61,34 +85,48 @@ class OperationsFragment : BaseFragment() {
             })
         }
 
-        fab.setOnClickListener {
-            Intent(activity, AddOperationActivity::class.java).also { intent ->
-                startActivityForResult(intent, ADD_OPERATION_REQUEST)
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == ADD_OPERATION_REQUEST) {
-                data?.extras?.getParcelable<Operation>(EXTRA_OPERATION)?.let {
-                    (rvOperations.adapter as OperationsAdapter).addItem(it)
+        InMemoryStorage.registerObserver { action: InMemoryStorage.Action, subject: Any? ->
+            val adapter = rvOperations.adapter as OperationsAdapter
+            when (action) {
+                InMemoryStorage.Action.AddOperation -> {
+                    adapter.notifyItemInserted(0)
                     rvOperations.scrollToPosition(0)
+                }
+                InMemoryStorage.Action.Filter -> {
+                    if (subject is MutableList<*>)
+                        @Suppress("UNCHECKED_CAST")
+                        adapter.operations = subject as MutableList<Operation>
+                    adapter.notifyDataSetChanged()
+                }
+                else -> {
                 }
             }
         }
+
+        fab.setOnClickListener {
+            Intent(activity, AddOperationActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+//        BottomSheetBehavior.from(bottom_sheet).state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     private fun initOperations(): MutableList<Operation> {
         return (1..30).map {
             Operation(
-                amount = Money(
+                value = Money(
                     amount = BigDecimal(10 * it),
-                    currency = RUB),
+                    currency = RUB
+                ),
                 category = Category(getString(R.string.category)),
-                comment = getString(R.string.comment))
+                comment = getString(R.string.comment)
+            )
         } as ArrayList
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Util.saveToSharedPrefs(requireContext(), "operations", InMemoryStorage.operations)
     }
 }

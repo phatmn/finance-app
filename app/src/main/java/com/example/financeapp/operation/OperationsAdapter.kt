@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.financeapp.R
 import kotlinx.android.synthetic.main.operation.view.*
 
-class OperationsAdapter(private val operations: MutableList<Operation>) :
+class OperationsAdapter(var operations: MutableList<Operation> = arrayListOf()) :
     RecyclerView.Adapter<OperationsAdapter.ViewHolder>() {
 
     private var listener: (View) -> Unit = {}
@@ -35,17 +35,12 @@ class OperationsAdapter(private val operations: MutableList<Operation>) :
         // todo image category change
         // todo category change
         with(holder) {
-            amount.text = operations[position].amount.toString()
+            amount.text = operations[position].value.toString()
             category.text = operations[position].category.name
             comment.text = operations[position].comment
             image.setImageResource(R.drawable.ic_local_grocery_store_black_24dp)
             parentView.setOnClickListener(listener)
         }
-    }
-
-    fun addItem(operation: Operation) {
-        operations.add(0, operation)
-        this.notifyItemInserted(0)
     }
 
     fun setOnClickListener(listener: (View) -> Unit) {

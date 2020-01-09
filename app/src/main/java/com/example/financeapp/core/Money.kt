@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Money (
     val amount: BigDecimal = BigDecimal.ZERO,
-    val currency: Currency
+    val currency: Currency = RUB
 ) : Parcelable {
     override fun toString(): String = when (currency) {
             is USD -> currency.symbol + amount

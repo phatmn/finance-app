@@ -8,7 +8,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -38,10 +38,17 @@ ext.versions = [
         constraintlayout: "1.1.3",
         recyclerview: "1.0.0",
         lottie: "3.2.0",
-        glide: "4.10.0"
+        glide: "4.10.0",
+        rxkotlin: "2.4.0",
+        rxandroid: "2.1.1",
+        rxjava: "2.2.16",
+        xprefs: "1.1.0",
+        gson: "2.8.6",
+        retrofit: "2.7.0"
 ]
-ext.stdKotlin = [
-        kotlinStdlibJdk7: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+ext.kotlin_ = [
+        stdlibJdk7: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+        reflect: "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 ]
 ext.junit = [
         junit: "junit:junit:$versions.junit"
@@ -76,4 +83,20 @@ ext.lottie = [
 ext.glide = [
         glide: "com.github.bumptech.glide:glide:$versions.glide",
         compiler: "com.github.bumptech.glide:compiler:$versions.glide"
+]
+ext.rxjava2 = [
+        rxkotlin: "io.reactivex.rxjava2:rxkotlin:$versions.rxkotlin",
+        rxandroid: "io.reactivex.rxjava2:rxandroid:$versions.rxandroid",
+        rxjava: "io.reactivex.rxjava2:rxjava:$versions.rxjava"
+]
+ext.xprefs = [
+        xprefs: "androidx.preference:preference-ktx:$versions.xprefs"
+]
+ext.gson = [
+        gson: "com.google.code.gson:gson:$versions.gson"
+]
+ext.retrofit2 = [
+    retrofit: "com.squareup.retrofit2:retrofit:$versions.retrofit",
+    converterGson: "com.squareup.retrofit2:converter-gson:$versions.retrofit",
+    adapterRxJava2: "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
 ]
